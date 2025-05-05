@@ -29,10 +29,10 @@ app.get('/health', (req, res) => {
 // 提交计算请求
 app.post('/compute', async (req, res) => {
     try {
-        const { requestId, encryptedData, operationType } = req.body as ComputationRequest;
+        const { requestId, data, operationType } = req.body as ComputationRequest;
 
         // 验证请求
-        if (!requestId || !encryptedData || operationType === undefined) {
+        if (!requestId || !data || operationType === undefined) {
             res.status(400).json({
                 success: false,
                 error: 'Missing required parameters'
@@ -52,7 +52,7 @@ app.post('/compute', async (req, res) => {
         // 执行计算
         const computationPromise = fheComputer.compute(
             requestId,
-            encryptedData,
+            data,
             operationType
         );
 

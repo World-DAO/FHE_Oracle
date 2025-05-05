@@ -3,7 +3,7 @@ import { ethers } from "ethers";
 // 计算请求
 export interface ComputationRequest {
     requestId: string;
-    encryptedData: string;
+    data: number[];
     operationType: number;
     additionalParams?: any;
 }
