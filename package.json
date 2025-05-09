@@ -5,7 +5,7 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
-    "dev": "ts-node src/index.ts",
+    "dev": "ts-node --project tsconfig.json --files src/index.ts",
     "test": "jest"
   },
   "keywords": [],
@@ -16,7 +16,7 @@
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",
     "@types/body-parser": "^1.19.5",
     "@types/express": "^5.0.1",
-    "@types/node": "^22.15.3",
+    "@types/node": "^22.15.12",
     "hardhat": "^2.23.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
@@ -29,7 +29,7 @@
     "ethers": "^6.13.7",
     "express": "^5.1.0",
     "fhevm": "^0.1.0",
-    "fhevmjs": "^0.5.1",
+    "fhevmjs": "^0.6.2",
     "winston": "^3.17.0"
   }
 }

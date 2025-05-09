@@ -72,8 +72,18 @@ export const contractABI = [
                 "type": "string"
             },
             {
+                "internalType": "einput",
+                "name": "inputHandleA",
+                "type": "bytes32"
+            },
+            {
+                "internalType": "einput",
+                "name": "inputHandleB",
+                "type": "bytes32"
+            },
+            {
                 "internalType": "bytes",
-                "name": "encryptedData",
+                "name": "inputProof",
                 "type": "bytes"
             },
             {
@@ -177,4 +187,4 @@ export const contractABI = [
         "stateMutability": "view",
         "type": "function"
     }
-];
+]

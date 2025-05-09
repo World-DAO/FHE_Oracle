@@ -6,7 +6,7 @@ import { logger } from '../utils/logger';
 import { contractABI } from '../config/contract-abi';
 
 const PORT = process.env.PORT || 3000;
-const FHEVM_RPC_URL = process.env.FHEVM_RPC_URL || 'http://localhost:8545';
+const FHEVM_RPC_URL = process.env.FHEVM_RPC_URL || 'https://testnet.zama.ai';
 const PRIVATE_KEY = process.env.PRIVATE_KEY || '';
 const CONTRACT_ADDRESS = process.env.CONTRACT_ADDRESS || '';
 
