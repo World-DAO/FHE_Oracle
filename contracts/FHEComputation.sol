@@ -16,9 +16,12 @@ contract FHEComputation is IFHEComputation, FHEStorage {
 
     function performComputation(
         string memory requestId,
-        bytes memory encryptedData,
+        einput inputHandleA,
+        einput inputHandleB,
+        bytes memory inputProof,
         uint8 operationType
-    ) external returns (bool) {
+    ) external {
+        emit ComputationPerformed(requestId, abi.encode("start", 0));
         require(!resultExists(requestId), "Result already exists");
         require(
             operationType <= uint8(OperationType.COMPARISON),
@@ -27,20 +30,20 @@ contract FHEComputation is IFHEComputation, FHEStorage {
 
         bytes memory result;
 
+        euint8 data_a = TFHE.asEuint8(inputHandleA, inputProof);
+        euint8 data_b = TFHE.asEuint8(inputHandleB, inputProof);
+
         if (operationType == uint8(OperationType.ADDITION)) {
-            result = performAddition(encryptedData);
+            result = performAddition(data_a, data_b);
         } else if (operationType == uint8(OperationType.MULTIPLICATION)) {
-            result = performMultiplication(encryptedData);
+            result = performMultiplication(data_a, data_b);
         } else if (operationType == uint8(OperationType.COMPARISON)) {
-            result = performComparison(encryptedData);
+            result = performComparison(data_a, data_b);
         }
 
         storeResult(requestId, result);
-
         emit ComputationPerformed(requestId, result);
         emit ResultStored(requestId);
-
-        return true;
     }
 
     function getResult(
@@ -51,29 +54,26 @@ contract FHEComputation is IFHEComputation, FHEStorage {
     }
 
     function performAddition(
-        bytes memory encryptedData
-    ) private pure returns (bytes memory) {
-        euint8 a = TFHE.asEuint8(uint8(encryptedData[0]));
-        euint8 b = TFHE.asEuint8(uint8(encryptedData[1]));
-        euint8 result = TFHE.add(a, b);
+        euint8 data_a,
+        euint8 data_b
+    ) private returns (bytes memory) {
+        euint8 result = TFHE.add(data_a, data_b);
         return abi.encode(result);
     }
 
     function performMultiplication(
-        bytes memory encryptedData
-    ) private pure returns (bytes memory) {
-        euint8 a = TFHE.asEuint8(uint8(encryptedData[0]));
-        euint8 b = TFHE.asEuint8(uint8(encryptedData[1]));
-        euint8 result = TFHE.mul(a, b);
+        euint8 data_a,
+        euint8 data_b
+    ) private returns (bytes memory) {
+        euint8 result = TFHE.mul(data_a, data_b);
         return abi.encode(result);
     }
 
     function performComparison(
-        bytes memory encryptedData
-    ) private pure returns (bytes memory) {
-        euint8 a = TFHE.asEuint8(uint8(encryptedData[0]));
-        euint8 b = TFHE.asEuint8(uint8(encryptedData[1]));
-        ebool result = TFHE.gt(a, b);
+        euint8 data_a,
+        euint8 data_b
+    ) private returns (bytes memory) {
+        ebool result = TFHE.gt(data_a, data_b);
         return abi.encode(result);
     }
 }

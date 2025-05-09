@@ -66,9 +66,9 @@ export class FHEComputer {
             });
             const encrypted = await input.encrypt();
             const handles = encrypted.handles;
-            console.log('handle[0]:', handles[0]);
-            console.log('handle[1]:', handles[1]);
-            console.log('inputProof:', input.inputProof);
+            console.log('handle[0]:', ethers.hexlify(handles[0]));
+            console.log('handle[1]:', ethers.hexlify(handles[1]));
+            console.log('inputProof:', ethers.hexlify(encrypted.inputProof));
             // const merged = new Uint8Array(handles[0].length + handles[1].length);
             // merged.set(handles[0], 0);
             // // merged.set(handles[1], handles[0].length);
@@ -77,9 +77,9 @@ export class FHEComputer {
 
             const tx = await this.contract.performComputation(
                 requestId,
-                handles[0],
-                handles[1],
-                encrypted.inputProof,
+                ethers.hexlify(handles[0]),
+                ethers.hexlify(handles[1]),
+                ethers.hexlify(encrypted.inputProof),
                 operationType
             );
 

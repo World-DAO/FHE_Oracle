@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.19;
+pragma solidity ^0.8.0;
+
+import "fhevm/lib/TFHE.sol";
 
 interface IFHEComputation {
     event ComputationPerformed(string requestId, bytes encryptedResult);
@@ -7,9 +9,11 @@ interface IFHEComputation {
 
     function performComputation(
         string memory requestId,
-        bytes memory encryptedData,
+        einput inputHandleA,
+        einput inputHandleB,
+        bytes memory inputProof,
         uint8 operationType
-    ) external returns (bool);
+    ) external;
 
     function getResult(
         string memory requestId
